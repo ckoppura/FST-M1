@@ -1,0 +1,11 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+with webdriver.Firefox()  as ffDriver :
+    ffDriver.get("https://v1.training-support.net/selenium/login-form")
+    print("title of web pageis : ",ffDriver.title)
+    username = ffDriver.find_element(By.ID, "username")
+    password = ffDriver.find_element(By.ID, "password")
+    username.send_keys("admin")
+    password.send_keys("password")
+    ffDriver.find_element(By.CSS_SELECTOR,"button").click()
+    ffDriver.quit()
