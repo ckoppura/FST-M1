@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="classes">
+  <test name="Test">
+    <classes>
+      <class name="activities.DemoOne"/>
+      <class name="activities.Activity07"/>
+      <class name="activities.Activity1"/>
+      <class name="activities.Activity05"/>
+      <class name="activities.DemoTwo"/>
+      <class name="activities.Activity03"/>
+      <class name="activities.Activity02"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
