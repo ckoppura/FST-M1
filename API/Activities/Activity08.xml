@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="70673792-b564-4805-93a2-971795f3bd7f" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="http://ipwhois.app Test Case 1" searchProperties="true" timeout="0" xmlns:con="http://eviware.com/soapui/config">
+      <con:settings/>
+      <con:testStep type="datasource" name="Data Source" id="201d7362-b67c-4978-a336-39abed65b216">
+        <con:settings/>
+        <con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:dataSource type="File">
+            <con:configuration><fileName>C:/Users/003KW0744/Desktop/SOAP/APIData.txt</fileName><separator>,</separator><trim>true</trim><charset>Cp1252</charset><quotedValues>false</quotedValues></con:configuration>
+          </con:dataSource>
+          <con:shared>true</con:shared>
+          <con:restartShared>true</con:restartShared>
+          <con:property>address</con:property>
+          <con:restartOnRun>true</con:restartOnRun>
+          <con:stopDatasourceExhausted>false</con:stopDatasourceExhausted>
+        </con:config>
+      </con:testStep>
+      
+      <con:testStep type="restrequest" name="Request 1" id="e854c1ef-bec9-4ca7-81bd-ee65cf1bf1b0">
+        <con:settings/>
+        <con:config service="http://ipwhois.app" resourcePath="/json/{IP}" methodName="IP" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Request 1" id="3c400551-5e9f-4ae5-b128-4eb530536ada" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://ipwhois.app</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://ipwhois.app/json/66.12.25.226</con:originalUri>
+            <con:assertion type="Valid HTTP Status Codes" id="eb01475f-28a7-4e12-8497-be639772fc63" name="Valid HTTP Status Codes">
+              <con:settings/>
+              <con:configuration>
+                <codes>200</codes>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="JsonPath Match" id="82395355-0966-4657-8ef5-12acb4983b1a" name="JSONPath Match">
+              <con:configuration><path>$['country']</path><content>"India"</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters><con:entry key="IP" value="${Data Source #IP}"/></con:parameters>
+            <con:parameterOrder>
+              <con:entry>IP</con:entry>
+            </con:parameterOrder>
+          </con:restRequest>
+        </con:config>
+      </con:testStep><con:testStep type="transfer" name="PropertyTransfer 1" id="41acb558-db41-4837-8bad-c0da8c3a75c8"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false"><con:name>city</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Request 1</con:sourceStep><con:sourcePath>$['city']</con:sourcePath><con:targetType>city_name</con:targetType><con:targetStep>Data Sink</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"><con:name>latitude</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Request 1</con:sourceStep><con:sourcePath>$['latitude']</con:sourcePath><con:targetType>latitude</con:targetType><con:targetStep>Data Sink</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true"><con:name>longitude</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Request 1</con:sourceStep><con:sourcePath>$['longitude']</con:sourcePath><con:targetType>longitude</con:targetType><con:targetStep>Data Sink</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="datasink" name="Data Sink" id="c000fb48-af52-4036-ab02-0ef5f99e7763"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="JDBC"><con:configuration><driver>com.mysql.jdbc.Driver</driver><connstr>jdbc:mysql://db4free.net:3306/fstm1db?user=fstm1db&amp;password=PASS_VALUE</connstr><pass>6Y6NowPybq</pass><Connection>&lt;None></Connection><query>insert into coordinates(city_name,latitude,longitude) values (?,?,?);</query><stored-procedure>false</stored-procedure></con:configuration></con:dataSink><con:properties><con:property><con:name>city_name</con:name></con:property><con:property><con:name>latitude</con:name></con:property><con:property><con:name>longitude</con:name></con:property></con:properties></con:config></con:testStep><con:testStep type="datasourceloop" name="Data Source Loop" id="e2710e46-0497-43cb-9bea-991fc9cb4c00"><con:settings/><con:config><dataSourceStep>Data Source 2</dataSourceStep><targetStep>Request 1</targetStep><discardResults>true</discardResults></con:config></con:testStep><con:properties/>
+      <con:reportParameters/>
+    </con:testCase>
